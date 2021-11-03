@@ -84,10 +84,12 @@ FLASK_ENV="test" pytest
 
 # Approx time investment
 
-Development environment setup: .5hrs (installing and configuring Cloud SDK and Docker)
-Hello World to first live deploy on GCP: 2.5hrs
-Writing the app: 1.5hrs
-Writing tests: .5hrs
-Debugging prod issues: .5hrs
-Manual testing and documentation: .5hrs
-Total: 6hrs
+Task | Time
+--- | ---
+Development environment setup | .5hrs (installing and configuring Cloud SDK and Docker)
+Hello World to first live deploy on GCP | 2.5hrs
+Writing the app | 1.5hrs
+Writing tests | .5hrs
+Debugging prod issues | .5hrs
+Manual testing and documentation | .5hrs
+Total | 6hrs
