@@ -1,0 +1,27 @@
+# The app has a frontend server that handles the web requests.
+# You define the cluster resources needed to run the frontend in deployment.yaml.
+# You use Deployments to create and update a ReplicaSet and its associated Pods.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-service
+  template:
+    metadata:
+      labels:
+        app: app-service
+    spec:
+      containers:
+      - name: app-container
+#        image: $GCP_REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$IMAGE_NAME:$VERSION_TAG
+        image: us-west1-docker.pkg.dev/eiq-demo/eiq-demo/app:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"

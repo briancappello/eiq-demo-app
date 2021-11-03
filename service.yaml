@@ -1,0 +1,14 @@
+# A service provides a load-balancing proxy over the app's pods.
+# By specifying the type as a 'LoadBalancer', GKE creates an external HTTP load balancer.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: app-service
+  ports:
+  - port: 80
+    targetPort: 8080

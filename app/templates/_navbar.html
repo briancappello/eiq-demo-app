@@ -1,0 +1,32 @@
+{% macro nav_link(label) %}
+  {% set endpoint = kwargs['endpoint'] %}
+  <li class="nav-item {% if endpoint is active %}active{% endif %}">
+    <a class="nav-link" href="{{ url_for(endpoint) }}">
+      {{ label }}
+      {% if endpoint is active %}
+        <span class="sr-only">(current)</span>
+      {% endif %}
+    </a>
+  </li>
+{% endmacro %}
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="{{ url_for('views.index') }}">
+    eIQ Demo App
+  </a>
+  <button type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      {{ nav_link('Home', endpoint='views.index') }}
+    </ul>
+  </div>
+</nav>

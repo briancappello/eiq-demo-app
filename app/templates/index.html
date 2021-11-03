@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% from '_macros.html' import render_form %}
+
+{% block content %}
+  <h1>eIQ Demo App</h1>
+
+  <p>Please select a CSV file to validate:</p>
+  {{ render_form(form, enctype="multipart/form-data") }}
+{% endblock %}
