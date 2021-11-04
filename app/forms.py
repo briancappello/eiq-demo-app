@@ -15,15 +15,8 @@ class CSVForm(FlaskForm):
     has_header = fields.BooleanField(label='Has Header Row?')
     submit = fields.SubmitField(label='Submit')
 
-    # WTForms does not support multi-field validation out-of-the-box
-    def validate(self, extra_validators=None):
-        is_valid = super().validate(extra_validators=extra_validators)
-        if is_valid:
-            is_valid = self.validate_csv()
-        return is_valid
-
-    def validate_csv(self) -> bool:
-        df = pd.read_csv(self.file.data,
+    def validate_file(self, field) -> bool:
+        df = pd.read_csv(field.data,
                          header=0 if self.has_header.data else None)
 
         errors = []
@@ -37,5 +30,6 @@ class CSVForm(FlaskForm):
         for col in df.columns:
             if df[col].isnull().any():
                 errors.append('All cells in the CSV file must contain data.')
-        self.file.errors = errors
+                break
+        field.errors = errors
         return not errors

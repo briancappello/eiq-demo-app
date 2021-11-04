@@ -10,10 +10,10 @@ DATA_DIR = os.path.join(
 
 
 def get_file(filename) -> Tuple[io.BytesIO, str]:
-    with open(os.path.join(DATA_DIR, filename)) as f:
+    with open(os.path.join(DATA_DIR, filename), 'rb') as f:
         data = f.read()
 
-    return io.BytesIO(bytes(data, 'utf-8')), filename
+    return io.BytesIO(data), filename
 
 
 def test_valid_csv(client):
@@ -23,7 +23,7 @@ def test_valid_csv(client):
         data=dict(file=get_file('valid.csv')),
         follow_redirects=True,
     )
-    assert 'CSV is valid!' in r.data.decode('utf-8')
+    assert 'CSV is valid!' in r.html
 
 
 def test_missing_row(client):
@@ -33,7 +33,7 @@ def test_missing_row(client):
         data=dict(file=get_file('missing-row.csv')),
         follow_redirects=True,
     )
-    assert 'CSV file must have exactly 10 data rows' in r.data.decode('utf-8')
+    assert 'CSV file must have exactly 10 data rows' in r.html
 
 
 def test_missing_col(client):
@@ -43,7 +43,7 @@ def test_missing_col(client):
         data=dict(file=get_file('missing-col.csv')),
         follow_redirects=True,
     )
-    assert 'CSV file must have exactly 3 data columns' in r.data.decode('utf-8')
+    assert 'CSV file must have exactly 3 data columns' in r.html
 
 
 def test_missing_cell(client):
@@ -53,4 +53,4 @@ def test_missing_cell(client):
         data=dict(file=get_file('missing-cell.csv')),
         follow_redirects=True,
     )
-    assert 'All cells in the CSV file must contain data.' in r.data.decode('utf-8')
+    assert 'All cells in the CSV file must contain data.' in r.html
